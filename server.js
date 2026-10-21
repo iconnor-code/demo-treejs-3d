@@ -9,6 +9,7 @@
 // 方块位置的真实值在浏览器端（rAF 驱动），服务器只保存页面最近回报的状态。
 import express from 'express';
 import http from 'node:http';
+import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { WebSocketServer } from 'ws';
@@ -16,6 +17,7 @@ import { WebSocketServer } from 'ws';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const threeDir = path.join(__dirname, 'node_modules', 'three');
 const PORT = process.env.PORT ?? 3000;
+const HOST = process.env.HOST ?? '0.0.0.0';  // 监听所有网卡，局域网设备可直连
 
 // ---------------------------------------------------------------------------
 // 内存状态（单进程，重启即清零——demo 取舍，见 README）
@@ -188,6 +190,10 @@ setInterval(() => {
   }
 }, 30_000);
 
-server.listen(PORT, () => {
-  console.log(`server: http://localhost:${PORT}  (浏览器打开后运行: npm run demo)`);
+server.listen(PORT, HOST, () => {
+  // 0.0.0.0 是监听地址不是可浏览地址，列出各网卡的实际入口（无外部网卡时退回 localhost）
+  const urls = Object.values(os.networkInterfaces()).flat()
+    .filter((a) => a?.family === 'IPv4' && !a.internal)
+    .map((a) => `http://${a.address}:${PORT}`);
+  console.log(`server: ${urls.join('  ') || `http://localhost:${PORT}`}  (浏览器打开后运行: npm run demo)`);
 });
