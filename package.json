@@ -1,0 +1,19 @@
+{
+  "name": "three-d-cube-path",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Three.js 3D 场景：方块沿外部程序通过 WebSocket 下发的路径移动",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "demo": "node client.js"
+  },
+  "dependencies": {
+    "express": "^5.3.0",
+    "three": "^0.186.1",
+    "ws": "^8.18.3"
+  }
+}

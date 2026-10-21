@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cube Path Demo — WebSocket 控制的方块移动</title>
+<style>
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #10141c; }
+  #hud {
+    position: fixed; top: 12px; right: 12px; padding: 8px 10px; border-radius: 6px;
+    background: rgba(15, 17, 22, .82); color: #9aa4b2;
+    font: 12px/1.6 ui-monospace, SFMono-Regular, Menlo, monospace;
+    white-space: pre; pointer-events: none;
+  }
+</style>
+<!-- import map 必须在 module script 之前：OrbitControls 用裸说明符 import 'three'，
+     浏览器原生 ESM 不认裸说明符，靠这里映射到服务器托管的 node_modules 产物 -->
+<script type="importmap">
+{
+  "imports": {
+    "three": "/vendor/three/build/three.module.js",
+    "three/addons/": "/vendor/three/jsm/"
+  }
+}
+</script>
+</head>
+<body>
+<div id="hud">connecting…</div>
+<script type="module" src="/main.js"></script>
+</body>
+</html>
