@@ -6,11 +6,20 @@
 - Three.js 从 npm 安装、由服务器直接托管（不依赖 CDN，不需要 Vite/打包器）
 - **外部程序与浏览器统一走 WebSocket**：页面本身仍由 HTTP 静态托管，业务通讯全在 WS 上
 
+## 运行截图
+### 1.使用ws客户端发送单个位置
+![截图1](./assets/2026-10-22_21-05-23.png)
+
+### 2.直接运行客户端测试代码
+![截图2](./assets/2026-10-22_21-14-07.png)
+
+**说明：服务端部署在阿里云虚拟机，虚拟机内只有局域网IP地址，服务启动后显示的监听地址`172.27.167.15`是B类局域网地址**
+
 ## 快速开始
 
 ```bash
 npm install
-npm start            # → http://localhost:3000
+npm start         
 ```
 
 浏览器打开 http://localhost:3000，然后另开终端运行演示脚本：
@@ -31,7 +40,7 @@ npx wscat -c ws://localhost:3000/ws/controller
 > {"type":"target","x":5,"y":5,"z":-3,"speed":2}
 ```
 
-注意：`> ` 是 wscat 的输入提示符，**不是命令的一部分**——只复制 JSON 本身。若把整行（含 `> `）粘到 zsh 终端，会被解析成重定向，JSON 里的逗号还会被花括号展开拆开，凭空创建 `type:target`、`x:5` 等空文件。不想进交互模式也可一条命令直接发：
+不想进交互模式也可一条命令直接发：
 
 ```bash
 npx wscat -c ws://localhost:3000/ws/controller -x '{"type":"target","x":5,"y":5,"z":-3,"speed":2}'
