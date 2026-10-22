@@ -17,12 +17,13 @@
 
 ## 快速开始
 
+启动服务端
 ```bash
 npm install
 npm start         
 ```
 
-浏览器打开 http://localhost:3000，然后另开终端运行演示脚本：
+按照服务端启动后的提示打开浏览器，然后另开终端运行演示脚本：
 
 ```bash
 npm run demo                 # 正方形路径（5 点，平面）
@@ -37,13 +38,13 @@ node client.js wave          # 波浪路径（25 点，y 正弦起伏——三�
 # 先进入交互模式
 npx wscat -c ws://localhost:3000/ws/controller
 # 输入以下坐标、速度：x:左右，y：上下，z：前后
-> {"type":"target","x":5,"y":5,"z":-3,"speed":2}
+> {"type":"target","x":5,"y":5,"z":6,"speed":2}
 ```
 
 不想进交互模式也可一条命令直接发：
 
 ```bash
-npx wscat -c ws://localhost:3000/ws/controller -x '{"type":"target","x":5,"y":5,"z":-3,"speed":2}'
+npx wscat -c ws://localhost:3000/ws/controller -x '{"type":"target","x":5,"y":5,"z":6,"speed":2}'
 ```
 
 ## 架构与数据流
@@ -71,7 +72,7 @@ flowchart TB
 连接建立即收到 `hello`（完整状态快照，含 `pageConnected`）。发送：
 
 ```json
-{ "type": "target", "x": 5, "y": 5, "z": -3, "speed": 2 }
+{ "type": "target", "x": 5, "y": 5, "z": 6, "speed": 2 }
 ```
 
 - `x/y/z/speed` 均必填、必须有限数字；`speed` 必须 `> 0`（0 速永远到不了，会让等待到达的一方死锁）
